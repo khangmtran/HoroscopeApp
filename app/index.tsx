@@ -1,60 +1,49 @@
-import React, { useRef } from "react";
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+} from "@gorhom/bottom-sheet";
+import { useRef } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import BottomSheet from "@gorhom/bottom-sheet";
-import CustomizeSheet from "../components/customizesheet";
+import CustomizeSheet from "../components/CustomizeSheet";
 
 export default function Index() {
-  const bottomSheetRef = useRef<BottomSheet>(null);
-
-  const openCustomize = () => {
-    bottomSheetRef.current?.expand();
-  };
-
+  // control bottom sheet
+  const bottomSheetRef = useRef<BottomSheetModal>(null);
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <View style={{ flex: 1 }}>
-        {/* header */}
-        <View style={{ alignItems: "center", justifyContent: "center", padding: 40 }}>
-          <Text style={{ fontSize: 32, fontWeight: "bold" }}>Daily Horoscope</Text>
-          <Text style={{ fontSize: 24, marginTop: 12 }}>Zodiac</Text>
-        </View>
-
-        {/* main content */}
-        <View style={{ flex: 1, borderWidth: 2 }}>
-          <View
-            style={{
-              width: 160,
-              height: 160,
-              alignSelf: "center",
-              marginVertical: "auto",
-              borderWidth: 1,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Text>Test Widget</Text>
+    <GestureHandlerRootView>
+      {/* wraps screen to enable modals */}
+      <BottomSheetModalProvider>
+        <View className="flex-1">
+          {/* header */}
+          <View className="items-center justify-center p-10">
+            <Text className="text-4xl font-bold">Daily Horoscope</Text>
+            <Text className="text-2xl mt-3">Zodiac</Text>
           </View>
+          {/* main content */}
+          <View className="flex-1 border-8">
+            {/* widget */}
+            {/* using my-auto will take up the whole vertical space */}
+            <View className="w-40 h-40 self-center my-auto border items-center justify-center">
+              <Text className="">Test Widget</Text>
+            </View>
 
-          <View style={{ padding: 20 }}>
-            <TouchableOpacity
-              style={{
-                borderWidth: 1,
-                borderRadius: 12,
-                paddingVertical: 12,
-                paddingHorizontal: 16,
-                alignSelf: "flex-start",
-              }}
-              onPress={openCustomize}
-            >
-              <Text>Customize ⚙️</Text>
-            </TouchableOpacity>
+            {/* customize button */}
+            <View className="p-5">
+              <TouchableOpacity
+                className="border rounded-xl self-start p-3.5"
+                onPress={() => bottomSheetRef.current?.present()}
+              >
+                <Text>Customize ⚙️</Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* bottom sheet */}
+            <CustomizeSheet ref={bottomSheetRef} />
           </View>
+          {/* end of main content */}
         </View>
-      </View>
-
-      {/* SectionList BottomSheet */}
-      <CustomizeSheet ref={bottomSheetRef} />
+      </BottomSheetModalProvider>
     </GestureHandlerRootView>
   );
 }

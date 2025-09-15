@@ -1,49 +1,51 @@
-import BottomSheet, {
-  BottomSheetModal,
-  BottomSheetModalProvider,
-  BottomSheetSectionList,
-  BottomSheetView,
-} from "@gorhom/bottom-sheet";
-import React, { forwardRef, useCallback, useMemo, useRef } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { BottomSheetModal, BottomSheetSectionList } from "@gorhom/bottom-sheet";
+import React, {
+  forwardRef,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { Text, TouchableOpacity, View } from "react-native";
+import ColorModal from "./ColorModal";
 
-// Types
 type SectionItem = string;
-type SectionType = {
+type Section = {
   title: string;
   data: SectionItem[];
 };
 
-// Forward ref to control SectionList scroll if needed
-const CustomizeSheet = forwardRef<BottomSheet>((props, ref) => {
-  const modalRef = useRef<BottomSheetModal>(null);
+const CustomizeSheet = forwardRef<BottomSheetModal>((props, ref) => {
+  const bgModalRef = useRef<BottomSheetModal>(null);
+  const [selectedModal, setSelectedModal] = useState<string | null>(null);
 
+  // Snap points for the bottom sheet
   const snapPoints = useMemo(() => ["40%", "70%"], []);
-
-  const sections: SectionType[] = useMemo(
-    () => [
-      { title: "Appearance", data: ["Background Color", "Text Color"] },
-      { title: "Widgets", data: ["Add Horoscope", "Add Calendar"] },
-    ],
+  const sections: Section[] = useMemo(
+    () => [{ title: "Appearance", data: ["Background Color", "Text Color"] }],
+    []
+  );
+  const renderSectionHeader = useCallback(
+    ({ section }: { section: Section }) => (
+      <View className="mb-3">
+        <Text className="text-3xl font-bold">{section.title}</Text>
+      </View>
+    ),
     []
   );
 
   const renderItem = useCallback(
     ({ item }: { item: SectionItem }) => (
-      <Pressable
-        style={styles.item}
-        onPress={() => modalRef.current?.present()}
-      >
-        <Text style={styles.itemText}>{item}</Text>
-      </Pressable>
-    ),
-    []
-  );
-
-  const renderSectionHeader = useCallback(
-    ({ section }: { section: SectionType }) => (
-      <View style={styles.sectionHeader}>
-        <Text style={styles.sectionHeaderText}>{section.title}</Text>
+      <View className="flex-row justify-between py-3">
+        <Text className="text-lg">{item}</Text>
+        <TouchableOpacity
+          onPress={() => {
+            setSelectedModal(item);
+            bgModalRef.current?.present();
+          }}
+        >
+          <Text>O</Text>
+        </TouchableOpacity>
       </View>
     ),
     []
@@ -51,50 +53,19 @@ const CustomizeSheet = forwardRef<BottomSheet>((props, ref) => {
 
   return (
     <>
-      <BottomSheet
-        ref={ref as React.Ref<BottomSheet>} // type cast for forwardRef
-        index={-1}
-        snapPoints={snapPoints}
-      >
+      <BottomSheetModal ref={ref} snapPoints={snapPoints} index={1}>
         <BottomSheetSectionList
           sections={sections}
-          keyExtractor={(i: string, index: number) => i + index}
-          renderItem={renderItem}
+          keyExtractor={(i: string) => i}
           renderSectionHeader={renderSectionHeader}
-          contentContainerStyle={styles.content}
+          renderItem={renderItem}
+          className="py-5 px-10"
         />
-      </BottomSheet>
+      </BottomSheetModal>
 
-      {/* Modal for individual section items */}
-      <BottomSheetModalProvider>
-        <BottomSheetModal ref={modalRef} snapPoints={["50%", "80%"]}>
-          <BottomSheetView style={styles.modalContent}>
-            <Text style={{ fontSize: 18, fontWeight: "600" }}>
-              Customize Option 🎨
-            </Text>
-            <Text style={{ marginTop: 10 }}>
-              Here you can put color pickers, sliders, toggles, etc.
-            </Text>
-          </BottomSheetView>
-        </BottomSheetModal>
-      </BottomSheetModalProvider>
+      <ColorModal ref={bgModalRef} selectedModal={selectedModal} />
     </>
   );
-});
-
-const styles = StyleSheet.create({
-  content: { backgroundColor: "white" },
-  sectionHeader: { backgroundColor: "#f2f2f2", padding: 8 },
-  sectionHeaderText: { fontSize: 16, fontWeight: "600" },
-  item: {
-    padding: 12,
-    marginHorizontal: 8,
-    marginVertical: 4,
-    backgroundColor: "#eee",
-    borderRadius: 8,
-  },
-  itemText: { fontSize: 15 },
-  modalContent: { flex: 1, alignItems: "center", padding: 20 },
 });
 
 export default CustomizeSheet;
