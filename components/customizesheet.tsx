@@ -14,15 +14,23 @@ type Section = {
   title: string;
   data: SectionItem[];
 };
+type Props = {
+  onBgColorChange: (color: string) => void;
+  onTextColorChange: (color: string) => void;
+  bgColor: string;
+  textColor: string;
+};
 
-const CustomizeSheet = forwardRef<BottomSheetModal>((props, ref) => {
+const CustomizeSheet = forwardRef<BottomSheetModal, Props>((props, ref) => {
+  const { onBgColorChange, onTextColorChange, bgColor, textColor } = props;
   const bgModalRef = useRef<BottomSheetModal>(null);
+  const fontModalRef = useRef<BottomSheetModal>(null);
   const [selectedModal, setSelectedModal] = useState<string | null>(null);
 
   // Snap points for the bottom sheet
   const snapPoints = useMemo(() => ["40%", "70%"], []);
   const sections: Section[] = useMemo(
-    () => [{ title: "Appearance", data: ["Background Color", "Text Color"] }],
+    () => [{ title: "Appearance", data: ["Background Color", "Text Color", "Font"] }],
     []
   );
   const renderSectionHeader = useCallback(
@@ -40,8 +48,13 @@ const CustomizeSheet = forwardRef<BottomSheetModal>((props, ref) => {
         <Text className="text-lg">{item}</Text>
         <TouchableOpacity
           onPress={() => {
-            setSelectedModal(item);
-            bgModalRef.current?.present();
+            // Open Color Modal when data is bgC or txtC
+            if (item === "Background Color" || item === "Text Color") {
+              setSelectedModal(item);
+              bgModalRef.current?.present();
+            } else if(item === "Font"){
+              fontModalRef.current?.present();
+            }
           }}
         >
           <Text>O</Text>
@@ -63,7 +76,17 @@ const CustomizeSheet = forwardRef<BottomSheetModal>((props, ref) => {
         />
       </BottomSheetModal>
 
-      <ColorModal ref={bgModalRef} selectedModal={selectedModal} />
+      <ColorModal
+        ref={bgModalRef}
+        selectedModal={selectedModal}
+        onBgColorChange={onBgColorChange}
+        onTextColorChange={onTextColorChange}
+        bgColor={bgColor}
+        textColor={textColor}
+      />
+
+      
+
     </>
   );
 });
