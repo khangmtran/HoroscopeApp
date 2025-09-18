@@ -1,19 +1,17 @@
 import { BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
 import oc from "open-color";
-import React, { forwardRef, useState } from "react";
+import React, { forwardRef } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useTheme } from "../app/_layout";
 
 type ColorModalProps = {
   selectedModal: string | null;
-  onBgColorChange: (color: string) => void;
-  onTextColorChange: (color: string) => void;
-  bgColor: string;
-  textColor: string;
 };
 
 const ColorModal = forwardRef<BottomSheetModal, ColorModalProps>(
   (props, ref) => {
-    const { selectedModal, onBgColorChange, onTextColorChange, bgColor, textColor } = props;
+    const { selectedModal } = props;
+    const { theme, setTheme } = useTheme();
     const colorPalette = [
       "white",
       ...oc.gray,
@@ -34,16 +32,16 @@ const ColorModal = forwardRef<BottomSheetModal, ColorModalProps>(
 
     const handleColorPress = (color: string) => {
       if (selectedModal === "Background Color") {
-        if(__DEV__){
-          console.log("bg change")
+        if (__DEV__) {
+          console.log("bg change");
         }
-        onBgColorChange(color);
+        setTheme((prev) => ({ ...prev, bgColor: color }));
       }
       if (selectedModal === "Text Color") {
-        if(__DEV__){
-          console.log("text change")
+        if (__DEV__) {
+          console.log("text change");
         }
-        onTextColorChange(color);
+        setTheme((prev) => ({ ...prev, textColor: color }));
       }
     };
 
@@ -70,9 +68,9 @@ const ColorModal = forwardRef<BottomSheetModal, ColorModalProps>(
             <Text className="self-center text-2xl font-bold my-5">Preview</Text>
             <View
               className="w-40 h-40 self-center border items-center justify-center mb-5"
-              style={{ backgroundColor: bgColor }}
+              style={{ backgroundColor: theme.bgColor }}
             >
-              <Text style={{color: textColor}}>Preview</Text>
+              <Text style={{ color: theme.textColor }}>Preview</Text>
             </View>
           </View>
         </BottomSheetView>
