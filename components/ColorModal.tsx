@@ -2,7 +2,7 @@ import { BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
 import oc from "open-color";
 import React, { forwardRef } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { useTheme } from "../app/_layout";
+import { useTheme } from "../contexts/themeContext";
 
 type ColorModalProps = {
   selectedModal: string | null;

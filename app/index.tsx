@@ -3,24 +3,15 @@ import {
   BottomSheetModalProvider,
 } from "@gorhom/bottom-sheet";
 import { useRef } from "react";
-import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import CustomizeSheet from "../components/CustomizeSheet";
-import { useTheme } from "./_layout";
+import { useTheme } from "../contexts/themeContext";
 
 export default function Index() {
   // control bottom sheet
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const { theme, setTheme } = useTheme();
-
-  if (theme.isLoading) {
-    return (
-      <View className="flex-1 items-center justify-center">
-        <Text className="text-3xl">Loading Settings...</Text>
-        <ActivityIndicator size="large" className="mt-10"></ActivityIndicator>
-      </View>
-    );
-  }
 
   return (
     <GestureHandlerRootView>
@@ -40,7 +31,14 @@ export default function Index() {
               className="w-40 h-40 self-center my-auto border items-center justify-center"
               style={{ backgroundColor: theme.bgColor }}
             >
-              <Text className="" style={{ color: theme.textColor }}>
+              <Text
+                className=""
+                style={{
+                  color: theme.textColor,
+                  fontFamily: theme.textFont,
+                  textAlign: "center",
+                }}
+              >
                 Test Widget
               </Text>
             </View>
