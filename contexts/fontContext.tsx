@@ -1,5 +1,5 @@
-import { createContext, useContext } from "react";
 import { useFonts } from "expo-font";
+import { createContext, useContext } from "react";
 
 export type FontContextType = {
   fonts: string[];
@@ -38,7 +38,7 @@ export const fontNames = [
 
 // Font provider
 export function FontProvider({ children }: { children: React.ReactNode }) {
-  const [fontsLoaded] = useFonts({
+  const [fontsLoaded, fontError] = useFonts({
     Roboto: require("../assets/fonts/Roboto-Regular.ttf"),
     OpenSans: require("../assets/fonts/OpenSans-Regular.ttf"),
     FuzzyBubbles: require("../assets/fonts/FuzzyBubbles-Regular.ttf"),
@@ -46,7 +46,6 @@ export function FontProvider({ children }: { children: React.ReactNode }) {
     AmaticSC: require("../assets/fonts/AmaticSC-Regular.ttf"),
     Caveat: require("../assets/fonts/Caveat-Regular.ttf"),
     Creepster: require("../assets/fonts/Creepster-Regular.ttf"),
-    DancingScript: require("../assets/fonts/DancingScript-Regular.ttf"),
     Delius: require("../assets/fonts/Delius-Regular.ttf"),
     IndieFlower: require("../assets/fonts/IndieFlower-Regular.ttf"),
     LobsterTwo: require("../assets/fonts/LobsterTwo-Regular.ttf"),
@@ -59,6 +58,11 @@ export function FontProvider({ children }: { children: React.ReactNode }) {
     SpecialElite: require("../assets/fonts/SpecialElite-Regular.ttf"),
     VT323: require("../assets/fonts/VT323-Regular.ttf"),
   });
+  if (__DEV__) {
+    if (fontError) {
+      console.error("Error loading fonts:", fontError);
+    }
+  }
 
   return (
     <FontContext.Provider value={{ fonts: fontNames, fontsLoaded }}>

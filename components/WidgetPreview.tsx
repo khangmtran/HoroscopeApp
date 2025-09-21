@@ -12,6 +12,7 @@ interface WidgetPreviewProps {
 const WidgetPreview: React.FC<WidgetPreviewProps> = ({ size = "medium" }) => {
   const { theme } = useTheme();
   const [currentFont, setCurrentFont] = useState(20);
+  const [isAdjustingFont, setIsAdjustingFont] = useState(false);
   const { width: screenWidth } = Dimensions.get("window");
   const { horoscope } = useHoroscope();
   const horoscopeText = horoscope.error || horoscope.data || "Loading...";
@@ -26,13 +27,13 @@ const WidgetPreview: React.FC<WidgetPreviewProps> = ({ size = "medium" }) => {
   useEffect(() => {
     switch (size) {
       case "small":
-        setCurrentFont(20);
+        setCurrentFont(40);
         break;
       case "medium":
-        setCurrentFont(25);
+        setCurrentFont(50);
         break;
       case "large":
-        setCurrentFont(30);
+        setCurrentFont(60);
         break;
     }
   }, [size]);
@@ -55,8 +56,13 @@ const WidgetPreview: React.FC<WidgetPreviewProps> = ({ size = "medium" }) => {
     const containerHeight = iosSizes[size].h * scale - 20;
 
     if (textHeight > containerHeight) {
-      setCurrentFont(currentFont - 0.5); // shrink gradually
-      console.log("Font decreased to: " + (currentFont - 0.5));
+      setIsAdjustingFont(true);
+      setCurrentFont(currentFont - 1); // shrink gradually
+      if (__DEV__) {
+        console.log("Font decreased to: " + (currentFont - 1));
+      }
+    } else {
+      setIsAdjustingFont(false);
     }
   };
 
@@ -83,6 +89,7 @@ const WidgetPreview: React.FC<WidgetPreviewProps> = ({ size = "medium" }) => {
           fontFamily: theme.textFont,
           textAlign: "center",
           textAlignVertical: "center",
+          opacity: isAdjustingFont ? 0 : 1,
         }}
         onTextLayout={handleTextLayout}
       >
