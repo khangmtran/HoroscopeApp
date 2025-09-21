@@ -2,7 +2,7 @@ import { BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
 import oc from "open-color";
 import React, { forwardRef } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { useTheme } from "../contexts/themeContext";
+import { useTheme } from "../contexts/ThemeContext";
 
 type ColorModalProps = {
   selectedModal: string | null;
@@ -70,7 +70,11 @@ const ColorModal = forwardRef<BottomSheetModal, ColorModalProps>(
               className="w-40 h-40 self-center border items-center justify-center mb-5"
               style={{ backgroundColor: theme.bgColor }}
             >
-              <Text style={{ color: theme.textColor, fontFamily: theme.textFont }}>Preview</Text>
+              <Text
+                style={{ color: theme.textColor, fontFamily: theme.textFont }}
+              >
+                Preview
+              </Text>
             </View>
           </View>
         </BottomSheetView>

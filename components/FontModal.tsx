@@ -1,8 +1,8 @@
 import { BottomSheetFlatList, BottomSheetModal } from "@gorhom/bottom-sheet";
-import React, { forwardRef, useRef, useImperativeHandle } from "react";
+import React, { forwardRef, useImperativeHandle, useRef } from "react";
 import { Pressable, Text } from "react-native";
-import { useFont } from "../contexts/fontContext";
-import { useTheme } from "../contexts/themeContext";
+import { useFont } from "../contexts/FontContext";
+import { useTheme } from "../contexts/ThemeContext";
 
 type FontItem = {
   item: string;
@@ -12,7 +12,7 @@ const FontModal = forwardRef<BottomSheetModal>((props, ref) => {
   const { fonts } = useFont();
   const { setTheme } = useTheme();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
-  
+
   useImperativeHandle(ref, () => bottomSheetRef.current!);
 
   const renderFontItem = ({ item }: FontItem) => (
