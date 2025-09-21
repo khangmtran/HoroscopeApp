@@ -70,7 +70,7 @@ const ColorModal = forwardRef<BottomSheetModal, ColorModalProps>(
               className="w-40 h-40 self-center border items-center justify-center mb-5"
               style={{ backgroundColor: theme.bgColor }}
             >
-              <Text style={{ color: theme.textColor }}>Preview</Text>
+              <Text style={{ color: theme.textColor, fontFamily: theme.textFont }}>Preview</Text>
             </View>
           </View>
         </BottomSheetView>
