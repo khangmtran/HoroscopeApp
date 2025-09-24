@@ -9,13 +9,14 @@ interface WidgetPreviewProps {
   size?: WidgetSize;
 }
 
-const WidgetPreview: React.FC<WidgetPreviewProps> = ({ size = "medium" }) => {
+const WidgetPreview: React.FC<WidgetPreviewProps> = () => {
   const { theme } = useTheme();
   const [currentFont, setCurrentFont] = useState(20);
   const [isAdjustingFont, setIsAdjustingFont] = useState(false);
   const { width: screenWidth } = Dimensions.get("window");
   const { horoscope } = useHoroscope();
   const horoscopeText = horoscope.error || horoscope.data || "Loading...";
+  const widgetSize: WidgetSize = theme.widgetSize as WidgetSize;
 
   // iOS WidgetKit default sizes (points)
   const iosSizes: Record<WidgetSize, { w: number; h: number }> = {
@@ -25,7 +26,7 @@ const WidgetPreview: React.FC<WidgetPreviewProps> = ({ size = "medium" }) => {
   };
 
   useEffect(() => {
-    switch (size) {
+    switch (widgetSize) {
       case "small":
         setCurrentFont(40);
         break;
@@ -36,9 +37,9 @@ const WidgetPreview: React.FC<WidgetPreviewProps> = ({ size = "medium" }) => {
         setCurrentFont(60);
         break;
     }
-  }, [size]);
+  }, [widgetSize]);
 
-  const baseSize = iosSizes[size];
+  const baseSize = iosSizes[widgetSize];
   // Scale to device width
   const scale = screenWidth / 375; // baseline iPhone width
   const width = baseSize.w * scale;
@@ -53,14 +54,13 @@ const WidgetPreview: React.FC<WidgetPreviewProps> = ({ size = "medium" }) => {
       0
     );
 
-    const containerHeight = iosSizes[size].h * scale - 20;
+    // container height - 20 for padding
+    const containerHeight = iosSizes[widgetSize].h * scale - 20;
 
+    //scale text to fit within container height
     if (textHeight > containerHeight) {
       setIsAdjustingFont(true);
       setCurrentFont(currentFont - 1); // shrink gradually
-      if (__DEV__) {
-        console.log("Font decreased to: " + (currentFont - 1));
-      }
     } else {
       setIsAdjustingFont(false);
     }

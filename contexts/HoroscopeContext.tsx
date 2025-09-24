@@ -1,9 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import HoroscopeService from "../services/HoroscopeService";
 
 export type HoroscopeState = {
@@ -36,8 +31,11 @@ export function HoroscopeProvider({ children }: { children: React.ReactNode }) {
 
   const fetchHoroscope = async () => {
     try {
-      setHoroscope(prev => ({ ...prev, isLoading: true, error: null }));
+      setHoroscope((prev) => ({ ...prev, isLoading: true, error: null }));
       const horoscopeData = await HoroscopeService.fetchDailyHoroscope();
+      if (__DEV__) {
+        console.log("Horoscope Fetched");
+      }
       setHoroscope({
         data: horoscopeData,
         isLoading: false,

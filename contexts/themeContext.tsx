@@ -12,6 +12,7 @@ export type ThemeState = {
   bgColor: string;
   textColor: string;
   textFont: string;
+  widgetSize: string;
   isLoading: boolean;
 };
 
@@ -33,6 +34,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     bgColor: "white",
     textColor: "black",
     textFont: "system",
+    widgetSize: "medium",
     isLoading: true,
   });
 
@@ -43,10 +45,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         const savedBgColor = await AsyncStorage.getItem("bg_color");
         const savedTextColor = await AsyncStorage.getItem("text_color");
         const savedTextFont = await AsyncStorage.getItem("text_font");
+        const savedWidgetSize = await AsyncStorage.getItem("widget_size");
         setTheme({
           bgColor: savedBgColor || "white",
           textColor: savedTextColor || "black",
           textFont: savedTextFont || "system",
+          widgetSize: savedWidgetSize || "medium",
           isLoading: false,
         });
       } catch (error) {
@@ -63,8 +67,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       AsyncStorage.setItem("bg_color", theme.bgColor);
       AsyncStorage.setItem("text_color", theme.textColor);
       AsyncStorage.setItem("text_font", theme.textFont);
+      AsyncStorage.setItem("widget_size", theme.widgetSize);
     }
-  }, [theme.bgColor, theme.textColor, theme.textFont, theme.isLoading]);
+  }, [theme.bgColor, theme.textColor, theme.textFont, theme.widgetSize, theme.isLoading]);
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
