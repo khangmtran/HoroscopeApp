@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import HoroscopeService from "../services/HoroscopeService";
+import { useTheme } from "./ThemeContext";
 
 export type HoroscopeState = {
   data: string;
@@ -23,6 +24,7 @@ export function useHoroscope(): HoroscopeContextType {
 }
 
 export function HoroscopeProvider({ children }: { children: React.ReactNode }) {
+  const { theme } = useTheme();
   const [horoscope, setHoroscope] = useState<HoroscopeState>({
     data: "",
     isLoading: true,
@@ -32,7 +34,7 @@ export function HoroscopeProvider({ children }: { children: React.ReactNode }) {
   const fetchHoroscope = async () => {
     try {
       setHoroscope((prev) => ({ ...prev, isLoading: true, error: null }));
-      const horoscopeData = await HoroscopeService.fetchDailyHoroscope();
+      const horoscopeData = await HoroscopeService.fetchDailyHoroscope("2001-07-14", theme.topic);
       if (__DEV__) {
         console.log("Horoscope Fetched");
       }
@@ -58,7 +60,7 @@ export function HoroscopeProvider({ children }: { children: React.ReactNode }) {
   // Fetch horoscope on app launch
   useEffect(() => {
     fetchHoroscope();
-  }, []);
+  }, [theme.topic]);
 
   return (
     <HoroscopeContext.Provider value={{ horoscope, refreshHoroscope }}>

@@ -13,6 +13,8 @@ export type ThemeState = {
   textColor: string;
   textFont: string;
   widgetSize: string;
+  topic: string;
+  zodiac: string;
   isLoading: boolean;
 };
 
@@ -35,6 +37,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     textColor: "black",
     textFont: "system",
     widgetSize: "medium",
+    topic: "string",
+    zodiac: "string",
     isLoading: true,
   });
 
@@ -46,11 +50,15 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         const savedTextColor = await AsyncStorage.getItem("text_color");
         const savedTextFont = await AsyncStorage.getItem("text_font");
         const savedWidgetSize = await AsyncStorage.getItem("widget_size");
+        const savedTopic = await AsyncStorage.getItem("topic");
+        const savedZodiac = await AsyncStorage.getItem("zodiac");
         setTheme({
-          bgColor: savedBgColor || "white",
-          textColor: savedTextColor || "black",
+          bgColor: savedBgColor || "black",
+          textColor: savedTextColor || "white",
           textFont: savedTextFont || "system",
           widgetSize: savedWidgetSize || "medium",
+          topic: savedTopic || "Horoscope",
+          zodiac: savedZodiac || "Aquarius",
           isLoading: false,
         });
       } catch (error) {
@@ -68,8 +76,18 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       AsyncStorage.setItem("text_color", theme.textColor);
       AsyncStorage.setItem("text_font", theme.textFont);
       AsyncStorage.setItem("widget_size", theme.widgetSize);
+      AsyncStorage.setItem("topic", theme.topic);
+      AsyncStorage.setItem("zodiac", theme.zodiac);
     }
-  }, [theme.bgColor, theme.textColor, theme.textFont, theme.widgetSize, theme.isLoading]);
+  }, [
+    theme.bgColor,
+    theme.textColor,
+    theme.textFont,
+    theme.widgetSize,
+    theme.topic,
+    theme.zodiac,
+    theme.isLoading,
+  ]);
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>

@@ -8,7 +8,9 @@ module.exports = {
       // NOTE: Add custom colors, fonts, etc. here.
       colors: {
         // black primary
-        primary: "#1E1E1E",
+        light: "#EBECEF",
+        dark: "A9A9A9",
+        blueButton: "#007AFF",
       },
     },
   },

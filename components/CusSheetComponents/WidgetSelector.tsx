@@ -11,20 +11,14 @@ const WidgetSelector = () => {
     }
   };
   return (
-    <View>
-      <Text className="text-2xl font-bold mb-1" style={{ color: "white" }}>
-        Widget Sizes
-      </Text>
-      <View
-        className="flex-row justify-between p-2 border rounded-xl"
-        style={{ backgroundColor: "#333333" }}
-      >
+    <View className="">
+      <Text className="text-2xl font-bold mb-1 color-white">Widget Sizes</Text>
+      <View className="flex-row justify-between p-2 border rounded-xl mb-5 bg-white">
         <Pressable onPress={() => handlePress("small")}>
           <Text
-            className="text-base border rounded-lg p-2 font-bold"
+            className="text-lg font-medium border rounded-lg p-2"
             style={{
-              backgroundColor:
-                theme.widgetSize === "small" ? "white" : "#8a8a8a",
+              backgroundColor: theme.widgetSize === "small" ? "white" : "gray",
             }}
           >
             Small
@@ -33,10 +27,9 @@ const WidgetSelector = () => {
 
         <Pressable onPress={() => handlePress("medium")}>
           <Text
-            className="text-base border rounded-lg p-2 font-bold"
+            className="text-lg font-medium border rounded-lg p-2"
             style={{
-              backgroundColor:
-                theme.widgetSize === "medium" ? "white" : "#8a8a8a",
+              backgroundColor: theme.widgetSize === "medium" ? "white" : "gray",
             }}
           >
             Medium
@@ -45,10 +38,9 @@ const WidgetSelector = () => {
 
         <Pressable onPress={() => handlePress("large")}>
           <Text
-            className="text-base border rounded-lg p-2 font-bold"
+            className="text-lg font-medium border rounded-lg p-2"
             style={{
-              backgroundColor:
-                theme.widgetSize === "large" ? "white" : "#8a8a8a",
+              backgroundColor: theme.widgetSize === "large" ? "white" : "gray",
             }}
           >
             Large

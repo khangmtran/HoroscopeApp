@@ -1,8 +1,8 @@
 import { BottomSheetFlatList, BottomSheetModal } from "@gorhom/bottom-sheet";
 import React, { forwardRef, useImperativeHandle, useRef } from "react";
-import { Pressable, Text } from "react-native";
-import { useFont } from "../contexts/FontContext";
-import { useTheme } from "../contexts/ThemeContext";
+import { Pressable, Text, View } from "react-native";
+import { useFont } from "../../contexts/FontContext";
+import { useTheme } from "../../contexts/ThemeContext";
 
 type FontItem = {
   item: string;
@@ -37,7 +37,22 @@ const FontModal = forwardRef<BottomSheetModal>((props, ref) => {
   );
 
   return (
-    <BottomSheetModal ref={bottomSheetRef} snapPoints={["75%"]} index={0}>
+    <BottomSheetModal ref={bottomSheetRef} snapPoints={["30%","75%"]} index={1}>
+      <View className="flex-row justify-between px-7">
+        <View className="">
+          <Text className="text-2xl font-bold">Fonts</Text>
+        </View>
+
+        <Pressable
+          onPress={() =>
+            ref && (ref as React.RefObject<BottomSheetModal>).current?.close()
+          }
+        >
+          <Text className="text-xl" style={{ color: "gray" }}>
+            X
+          </Text>
+        </Pressable>
+      </View>
       <BottomSheetFlatList
         data={fonts}
         keyExtractor={(item: string) => item}

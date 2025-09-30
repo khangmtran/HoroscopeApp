@@ -13,11 +13,17 @@ class HoroscopeService {
   }
 
   static async fetchDailyHoroscope(
-    dob: string = "2001-07-14"
+    dob: string = "2001-07-14",
+    topic: string = "general"
   ): Promise<string> {
+    const normalizedTopic = topic.toLowerCase();
+    const url =
+      normalizedTopic === "general"
+        ? "https://the-numerology-api.p.rapidapi.com/horoscope/today"
+        : `https://the-numerology-api.p.rapidapi.com/horoscope/${normalizedTopic}/today`;
     const options = {
       method: "GET",
-      url: "https://the-numerology-api.p.rapidapi.com/horoscope/today",
+      url,
       params: { dob },
       headers: {
         "x-rapidapi-key": "7c287f10cdmsh97eddefee96db57p13c3f7jsnb07ec911fecb",
@@ -32,9 +38,9 @@ class HoroscopeService {
       return horoscopeOnly || "No data found";
     } catch (error) {
       if (__DEV__) {
-        console.error("Failed to fetch horoscope:", error);
+        console.error(`Failed to fetch ${topic}:`, error);
       }
-      throw new Error("Failed to load horoscope");
+      throw new Error(`Failed to load ${topic}`);
     }
   }
 }
