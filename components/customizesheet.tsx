@@ -111,7 +111,6 @@ const CustomizeSheet = forwardRef<BottomSheetModal>((props, ref) => {
         <ImageBackground
           source={require("../assets/images/bg.png")}
           style={{ flex: 1 }}
-          resizeMode="stretch"
         >
           <View className="px-5 flex-1">
             <View className="flex-row justify-end px-3">

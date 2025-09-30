@@ -38,9 +38,9 @@ class HoroscopeService {
       return horoscopeOnly || "No data found";
     } catch (error) {
       if (__DEV__) {
-        console.error(`Failed to fetch ${topic}:`, error);
+        console.error(`Failed to fetch topic ${topic}:`, error);
       }
-      throw new Error(`Failed to load ${topic}`);
+      throw new Error(`Failed to load topic ${topic}`);
     }
   }
 }

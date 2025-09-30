@@ -38,9 +38,12 @@ const ZodiacSheet = forwardRef<BottomSheet>((props, ref) => {
         renderItem={({ item }: { item: ZodiacItem }) => (
           <View className="p-5">
             <Pressable
-              onPress={() =>
-                setTheme((prev) => ({ ...prev, zodiac: item.name }))
-              }
+              onPress={() => {
+                setTheme((prev) => ({ ...prev, zodiac: item.name }));
+                if (__DEV__) {
+                  console.log("set zodiac to ", item.name);
+                }
+              }}
               className="flex-row items-center border rounded-xl py-5"
             >
               <View style={{ width: "15%" }}>
