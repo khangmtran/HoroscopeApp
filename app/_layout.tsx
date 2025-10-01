@@ -3,7 +3,7 @@ import React from "react";
 import { ActivityIndicator, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FontProvider, useFont } from "../contexts/FontContext";
-import { HoroscopeProvider } from "../contexts/HoroscopeContext";
+import { HoroscopeProvider, useHoroscope } from "../contexts/HoroscopeContext";
 import { ThemeProvider, useTheme } from "../contexts/ThemeContext";
 import "./globals.css";
 
@@ -22,6 +22,7 @@ export default function RootLayout() {
 function Content() {
   const { fontsLoaded } = useFont();
   const { theme } = useTheme();
+  const { horoscope } = useHoroscope();
 
   if (!fontsLoaded) {
     return (
@@ -32,7 +33,7 @@ function Content() {
     );
   }
 
-  if (theme.isLoading) {
+  if (theme.isLoading || horoscope.isLoading) {
     return (
       <View className="flex-1 items-center justify-center">
         <Text className="text-3xl">Loading Settings...</Text>

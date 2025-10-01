@@ -24,6 +24,21 @@ export function useHoroscope(): HoroscopeContextType {
   return context;
 }
 
+const zodiacDates: Record<string, string> = {
+  Aquarius: "01-20",
+  Pisces: "02-19",
+  Aries: "03-21",
+  Taurus: "04-20",
+  Gemini: "05-21",
+  Cancer: "06-21",
+  Leo: "07-23",
+  Virgo: "08-23",
+  Libra: "09-23",
+  Scorpio: "10-23",
+  Sagittarius: "11-22",
+  Capricorn: "12-22",
+};
+
 export function HoroscopeProvider({ children }: { children: React.ReactNode }) {
   const { theme } = useTheme();
   const selectedZodiac = ZodiacData.find((z) => z.name === theme.zodiac);
@@ -35,21 +50,6 @@ export function HoroscopeProvider({ children }: { children: React.ReactNode }) {
 
   const getZodiacDate = (zodiacName?: string): string | null => {
     if (!zodiacName) return null;
-
-    const zodiacDates: Record<string, string> = {
-      Aquarius: "01-20",
-      Pisces: "02-19",
-      Aries: "03-21",
-      Taurus: "04-20",
-      Gemini: "05-21",
-      Cancer: "06-21",
-      Leo: "07-23",
-      Virgo: "08-23",
-      Libra: "09-23",
-      Scorpio: "10-23",
-      Sagittarius: "11-22",
-      Capricorn: "12-22",
-    };
 
     const retDate = zodiacDates[zodiacName];
     return retDate ? `2025-${retDate}` : null;
@@ -90,11 +90,11 @@ export function HoroscopeProvider({ children }: { children: React.ReactNode }) {
 
   // Fetch horoscope on app launch
   useEffect(() => {
-    if (theme.isLoading){
+    if (theme.isLoading) {
       return;
     }
     fetchHoroscope();
-  }, [theme.topic, selectedZodiac?.name]);
+  }, [theme.topic, theme.zodiac, theme.isLoading]);
 
   return (
     <HoroscopeContext.Provider value={{ horoscope, refreshHoroscope }}>

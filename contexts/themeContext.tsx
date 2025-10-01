@@ -86,7 +86,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     theme.widgetSize,
     theme.topic,
     theme.zodiac,
-    theme.isLoading,
   ]);
 
   return (

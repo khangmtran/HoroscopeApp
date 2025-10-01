@@ -37,7 +37,7 @@ const WidgetPreview: React.FC<WidgetPreviewProps> = () => {
         setCurrentFont(60);
         break;
     }
-  }, [widgetSize]);
+  }, [widgetSize, theme.textFont, theme.topic, theme.zodiac]);
 
   const baseSize = iosSizes[widgetSize];
   // Scale to device width
@@ -59,10 +59,15 @@ const WidgetPreview: React.FC<WidgetPreviewProps> = () => {
 
     //scale text to fit within container height
     if (textHeight > containerHeight) {
-      setIsAdjustingFont(true);
+      // Only update if not already adjusting to prevent infinite loop
+      if (!isAdjustingFont) {
+        setIsAdjustingFont(true);
+      }
       setCurrentFont(currentFont - 1); // shrink gradually
     } else {
-      setIsAdjustingFont(false);
+      if (isAdjustingFont) {
+        setIsAdjustingFont(false);
+      }
     }
   };
 

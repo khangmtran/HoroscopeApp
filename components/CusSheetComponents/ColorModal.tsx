@@ -48,7 +48,7 @@ const ColorModal = forwardRef<BottomSheetModal, ColorModalProps>(
     return (
       <BottomSheetModal
         ref={ref}
-        snapPoints={["30%","75%"]}
+        snapPoints={["30%", "75%"]}
         index={1}
         enableDynamicSizing={false}
       >
@@ -70,7 +70,7 @@ const ColorModal = forwardRef<BottomSheetModal, ColorModalProps>(
         {/* color palette */}
         <BottomSheetFlatList
           data={colorPalette}
-          keyExtractor={(item: string, index: number) => `${item}-${index}`}
+          keyExtractor={(item: string) => item}
           numColumns={12}
           contentContainerStyle={{
             paddingLeft: 20,
