@@ -37,7 +37,12 @@ const FontModal = forwardRef<BottomSheetModal>((props, ref) => {
   );
 
   return (
-    <BottomSheetModal ref={bottomSheetRef} snapPoints={["30%","75%"]} index={1}>
+    <BottomSheetModal
+      ref={bottomSheetRef}
+      snapPoints={["30%" ,"75%"]}
+      index={1}
+      enableDynamicSizing={false}
+    >
       <View className="flex-row justify-between px-7">
         <View className="">
           <Text className="text-2xl font-bold">Fonts</Text>

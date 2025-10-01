@@ -18,10 +18,17 @@ type ZodiacItem = {
 
 const ZodiacSheet = forwardRef<BottomSheet>((props, ref) => {
   const { theme, setTheme } = useTheme();
+
   return (
-    <BottomSheet ref={ref} enablePanDownToClose snapPoints={["35%"]} index={0}>
+    <BottomSheet
+      ref={ref}
+      enablePanDownToClose
+      snapPoints={["30%", "100%"]}
+      index={-1}
+      enableDynamicSizing={false}
+    >
       <View className="px-7 py-2 flex-row justify-between items-center">
-        <Text className="text-2xl font-bold">Choose Your Sign</Text>{" "}
+        <Text className="text-2xl font-bold">Choose Your Sign</Text>
         <Pressable
           onPress={() =>
             ref && (ref as React.RefObject<BottomSheet>).current?.close()

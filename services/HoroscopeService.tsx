@@ -13,7 +13,7 @@ class HoroscopeService {
   }
 
   static async fetchDailyHoroscope(
-    dob: string = "2001-07-14",
+    dob: string = "2025-01-20",
     topic: string = "general"
   ): Promise<string> {
     const normalizedTopic = topic.toLowerCase();

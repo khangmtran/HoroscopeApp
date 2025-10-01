@@ -22,9 +22,7 @@ const TopicModal = forwardRef<BottomSheetModal>((props, ref) => {
       <Pressable
         onPress={() => setTheme((prev) => ({ ...prev, topic: item.name }))}
       >
-        <View
-          className="flex-row justify-between items-center border rounded-2xl p-5 mb-5"
-        >
+        <View className="flex-row justify-between items-center border rounded-2xl p-5 mb-5">
           <Text className="text-lg font-bold">{item.name}</Text>
           {theme.topic === item.name && (
             <Text className="color-green-600 text-xl font-bold">✔</Text>
@@ -35,7 +33,27 @@ const TopicModal = forwardRef<BottomSheetModal>((props, ref) => {
   };
 
   return (
-    <BottomSheetModal ref={ref}>
+    <BottomSheetModal
+      ref={ref}
+      snapPoints={["30%", "50%"]}
+      index={1}
+      enableDynamicSizing={false}
+    >
+      <View className="flex-row justify-between px-7">
+        <View className="">
+          <Text className="text-2xl font-bold">Topics</Text>
+        </View>
+
+        <Pressable
+          onPress={() =>
+            ref && (ref as React.RefObject<BottomSheetModal>).current?.close()
+          }
+        >
+          <Text className="text-xl" style={{ color: "gray" }}>
+            X
+          </Text>
+        </Pressable>
+      </View>
       <BottomSheetFlatList
         data={topics}
         keyExtractor={(item: Topic) => item.name}

@@ -103,10 +103,11 @@ const CustomizeSheet = forwardRef<BottomSheetModal>((props, ref) => {
     <>
       <BottomSheetModal
         ref={ref}
-        snapPoints={["55%"]}
+        snapPoints={["30%","55%"]}
         index={1}
         backgroundStyle={{ borderRadius: 25, backgroundColor: "#000021" }}
         handleIndicatorStyle={{ backgroundColor: "white" }}
+        enableDynamicSizing={false}
       >
         <ImageBackground
           source={require("../assets/images/bg.png")}

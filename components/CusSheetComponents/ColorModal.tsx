@@ -46,7 +46,12 @@ const ColorModal = forwardRef<BottomSheetModal, ColorModalProps>(
     };
 
     return (
-      <BottomSheetModal ref={ref} snapPoints={["75%"]} index={1}>
+      <BottomSheetModal
+        ref={ref}
+        snapPoints={["30%","75%"]}
+        index={1}
+        enableDynamicSizing={false}
+      >
         <View className="flex-row px-7 mb-5">
           <View className="flex-1 items-center">
             <Text className="text-2xl font-bold">{selectedModal}</Text>

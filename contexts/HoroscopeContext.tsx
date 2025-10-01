@@ -90,6 +90,9 @@ export function HoroscopeProvider({ children }: { children: React.ReactNode }) {
 
   // Fetch horoscope on app launch
   useEffect(() => {
+    if (theme.isLoading){
+      return;
+    }
     fetchHoroscope();
   }, [theme.topic, selectedZodiac?.name]);
 
