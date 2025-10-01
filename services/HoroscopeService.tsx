@@ -21,12 +21,16 @@ class HoroscopeService {
       normalizedTopic === "general"
         ? "https://the-numerology-api.p.rapidapi.com/horoscope/today"
         : `https://the-numerology-api.p.rapidapi.com/horoscope/${normalizedTopic}/today`;
+    const apiKey = process.env.EXPO_PUBLIC_RAPIDAPI_KEY;
+    if (!apiKey) {
+      throw new Error("API key not found. Set EXPO_PUBLIC_RAPIDAPI_KEY in .env file");
+    }
     const options = {
       method: "GET",
       url,
       params: { dob },
       headers: {
-        "x-rapidapi-key": "7c287f10cdmsh97eddefee96db57p13c3f7jsnb07ec911fecb",
+        "x-rapidapi-key": apiKey,
         "x-rapidapi-host": "the-numerology-api.p.rapidapi.com",
       },
     };
