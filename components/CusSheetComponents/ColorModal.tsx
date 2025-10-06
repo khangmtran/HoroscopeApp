@@ -13,9 +13,9 @@ const ColorModal = forwardRef<BottomSheetModal, ColorModalProps>(
     const { selectedModal } = props;
     const { theme, setTheme } = useTheme();
     const colorPalette = [
-      "white",
+      "#FFFFFF",
       ...oc.gray,
-      "black",
+      "#000000",
       ...oc.red,
       ...oc.pink,
       ...oc.grape,

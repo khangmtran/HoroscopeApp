@@ -7,6 +7,8 @@ import React, {
   useEffect,
   useState,
 } from "react";
+import { widgetStorage } from "../app/utils/widgetStorage";
+import { useHoroscope } from "../contexts/HoroscopeContext";
 
 export type ThemeState = {
   bgColor: string;
@@ -41,6 +43,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     zodiac: "string",
     isLoading: true,
   });
+  const { horoscope } = useHoroscope();
 
   // Load theme from AsyncStorage
   useEffect(() => {
@@ -61,6 +64,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
           zodiac: savedZodiac || "Aquarius",
           isLoading: false,
         });
+        widgetStorage.saveWidgetData({
+          bgColor: theme.bgColor,
+          textColor: theme.textColor,
+          textFont: theme.textFont,
+          horoscope: horoscope.data,
+        });
       } catch (error) {
         console.log("Error loading theme", error);
         setTheme((prev) => ({ ...prev, isLoading: false }));
@@ -78,6 +87,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       AsyncStorage.setItem("widget_size", theme.widgetSize);
       AsyncStorage.setItem("topic", theme.topic);
       AsyncStorage.setItem("zodiac", theme.zodiac);
+      widgetStorage.saveWidgetData({
+        bgColor: theme.bgColor,
+        textColor: theme.textColor,
+        textFont: theme.textFont,
+        horoscope: horoscope.data,
+      });
     }
   }, [
     theme.bgColor,
