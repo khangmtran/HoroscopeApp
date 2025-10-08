@@ -1,7 +1,7 @@
 import { ZodiacData } from "@/components/ZodiacSheet";
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { widgetStorage } from "../app/utils/widgetStorage";
 import HoroscopeService from "../services/HoroscopeService";
+import { widgetStorage } from "../utils/widgetStorage";
 import { useTheme } from "./ThemeContext";
 
 export type HoroscopeState = {
@@ -75,12 +75,6 @@ export function HoroscopeProvider({ children }: { children: React.ReactNode }) {
         isLoading: false,
         error: null,
       });
-      widgetStorage.saveWidgetData({
-        bgColor: theme.bgColor,
-        textColor: theme.textColor,
-        textFont: theme.textFont,
-        horoscope: horoscope.data,
-      });
     } catch (error) {
       console.error("Failed to fetch horoscope:", error);
       setHoroscope({
@@ -101,12 +95,7 @@ export function HoroscopeProvider({ children }: { children: React.ReactNode }) {
       return;
     }
     fetchHoroscope();
-    widgetStorage.saveWidgetData({
-      bgColor: theme.bgColor,
-      textColor: theme.textColor,
-      textFont: theme.textFont,
-      horoscope: horoscope.data,
-    });
+    widgetStorage.saveWidgetData(horoscope.data);
   }, [theme.topic, theme.zodiac, theme.isLoading]);
 
   return (

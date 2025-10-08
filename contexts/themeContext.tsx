@@ -7,8 +7,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { widgetStorage } from "../app/utils/widgetStorage";
-import { useHoroscope } from "../contexts/HoroscopeContext";
+import { widgetStorage } from "../utils/widgetStorage";
 
 export type ThemeState = {
   bgColor: string;
@@ -43,7 +42,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     zodiac: "string",
     isLoading: true,
   });
-  const { horoscope } = useHoroscope();
 
   // Load theme from AsyncStorage
   useEffect(() => {
@@ -60,15 +58,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
           textColor: savedTextColor || "white",
           textFont: savedTextFont || "system",
           widgetSize: savedWidgetSize || "medium",
-          topic: savedTopic || "Horoscope",
+          topic: savedTopic || "General",
           zodiac: savedZodiac || "Aquarius",
           isLoading: false,
-        });
-        widgetStorage.saveWidgetData({
-          bgColor: theme.bgColor,
-          textColor: theme.textColor,
-          textFont: theme.textFont,
-          horoscope: horoscope.data,
         });
       } catch (error) {
         console.log("Error loading theme", error);
@@ -87,12 +79,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       AsyncStorage.setItem("widget_size", theme.widgetSize);
       AsyncStorage.setItem("topic", theme.topic);
       AsyncStorage.setItem("zodiac", theme.zodiac);
-      widgetStorage.saveWidgetData({
-        bgColor: theme.bgColor,
-        textColor: theme.textColor,
-        textFont: theme.textFont,
-        horoscope: horoscope.data,
-      });
+      widgetStorage.saveWidgetTheme(
+        theme.bgColor,
+        theme.textColor,
+        theme.textFont
+      );
     }
   }, [
     theme.bgColor,
@@ -101,6 +92,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     theme.widgetSize,
     theme.topic,
     theme.zodiac,
+    theme.isLoading,
   ]);
 
   return (

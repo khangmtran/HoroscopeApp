@@ -23,7 +23,9 @@ class HoroscopeService {
         : `https://the-numerology-api.p.rapidapi.com/horoscope/${normalizedTopic}/today`;
     const apiKey = process.env.EXPO_PUBLIC_RAPIDAPI_KEY;
     if (!apiKey) {
-      throw new Error("API key not found. Set EXPO_PUBLIC_RAPIDAPI_KEY in .env file");
+      throw new Error(
+        "API key not found. Set EXPO_PUBLIC_RAPIDAPI_KEY in .env file"
+      );
     }
     const options = {
       method: "GET",
