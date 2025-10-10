@@ -75,6 +75,10 @@ export function HoroscopeProvider({ children }: { children: React.ReactNode }) {
         isLoading: false,
         error: null,
       });
+      if (__DEV__) {
+        console.log("set widgetStorage with data:", horoscopeData);
+      }
+      widgetStorage.saveWidgetData(horoscopeData);
     } catch (error) {
       console.error("Failed to fetch horoscope:", error);
       setHoroscope({
@@ -95,7 +99,6 @@ export function HoroscopeProvider({ children }: { children: React.ReactNode }) {
       return;
     }
     fetchHoroscope();
-    widgetStorage.saveWidgetData(horoscope.data);
   }, [theme.topic, theme.zodiac, theme.isLoading]);
 
   return (

@@ -15,7 +15,8 @@
         "com.apple.security.application-groups": [
           "group.com.knt.HoroscopeApp"
         ]
-      }
+      },
+      "bundleIdentifier": "com.anonymous.HoroscopeApp"
     },
     "android": {
       "adaptiveIcon": {
