@@ -21,31 +21,24 @@ func loadWidgetData() -> WidgetData {
   let appGroupID = "group.com.knt.HoroscopeApp"
   
   guard let userDefaults = UserDefaults(suiteName: appGroupID) else {
-    print("❌ Failed to create UserDefaults with App Group")
     return WidgetData.default
   }
   
   guard let jsonString = userDefaults.string(forKey: "widgetData") else {
-    print("❌ No data found for key 'widgetData'")
     return WidgetData.default
   }
   
   print("✅ Found data: \(jsonString)")
   
   guard let jsonData = jsonString.data(using: .utf8) else {
-    print("❌ Failed to convert string to data")
     return WidgetData.default
   }
   
   do {
     let decoder = JSONDecoder()
     let widgetData = try decoder.decode(WidgetData.self, from: jsonData)
-    print("✅ Successfully decoded widget data")
-    print("   - Horoscope: \(widgetData.horoscope)")
-    print("   - BgColor: \(widgetData.bgColor)")
     return widgetData
   } catch {
-    print("❌ Failed to decode: \(error)")
     return WidgetData.default
   }
 }

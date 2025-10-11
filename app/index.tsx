@@ -1,8 +1,4 @@
-import type { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { faGear } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { Image } from "expo-image";
-
 import BottomSheet, {
   BottomSheetModal,
   BottomSheetModalProvider,
@@ -57,7 +53,10 @@ export default function Index() {
                 <Pressable onPress={() => bottomSheetRef.current?.present()}>
                   <View className="border rounded-2xl self-start p-3.5 bg-white">
                     <View className="flex-row gap-2 items-center">
-                      <FontAwesomeIcon icon={faGear as IconProp} size={18} />
+                      <Image
+                        source={require("../assets/icons/customize.png")}
+                        style={{ width: 18, height: 18 }}
+                      />
                       <Text className="text-lg font-bold">Customize</Text>
                     </View>
                   </View>
@@ -72,7 +71,7 @@ export default function Index() {
                         source={require("../assets/icons/zodiac_wheel.png")}
                         style={{ width: 18, height: 18 }}
                       />
-                      <Text className="text-lg font-bold">My Sign</Text>
+                      <Text className="text-lg font-bold">Zodiac Signs</Text>
                     </View>
                   </View>
                 </Pressable>

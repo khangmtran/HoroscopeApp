@@ -75,9 +75,6 @@ export function HoroscopeProvider({ children }: { children: React.ReactNode }) {
         isLoading: false,
         error: null,
       });
-      if (__DEV__) {
-        console.log("set widgetStorage with data:", horoscopeData);
-      }
       widgetStorage.saveWidgetData(horoscopeData);
     } catch (error) {
       console.error("Failed to fetch horoscope:", error);
