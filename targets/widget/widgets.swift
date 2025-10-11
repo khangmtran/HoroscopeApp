@@ -125,9 +125,9 @@ struct widgetEntryView : View {
       VStack {
         Text(entry.widgetData.horoscope)
         .font(getFontForFamily(entry.widgetData.textFont))
-        .foregroundStyle(.white)
+        .foregroundStyle(Color(hex: entry.widgetData.textColor))
         .multilineTextAlignment(.center)
-        .minimumScaleFactor(0.1)
+        .minimumScaleFactor(0.5)
       }
       .frame(maxWidth: .infinity, maxHeight: .infinity)
   }
@@ -136,21 +136,21 @@ struct widgetEntryView : View {
   private func getFontForFamily(_ fontFamily: String) -> Font {
     switch fontFamily.lowercased() {
     case "system":
-      return .system(size: 50, weight: .regular)
+      return .system(size: 20, weight: .regular)
     case "arial":
-      return .custom("Arial", size: 50)
+      return .custom("Arial", size: 20)
     case "helvetica":
-      return .custom("Helvetica", size: 50)
+      return .custom("Helvetica", size: 20)
     case "times new roman", "times":
-      return .custom("Times New Roman", size: 50)
+      return .custom("Times New Roman", size: 20)
     case "courier", "courier new":
-      return .custom("Courier New", size: 50)
+      return .custom("Courier New", size: 20)
     case "georgia":
-      return .custom("Georgia", size: 50)
+      return .custom("Georgia", size: 20)
     case "verdana":
-      return .custom("Verdana", size: 50)
+      return .custom("Verdana", size: 20)
     default:
-      return .system(size: 50, weight: .regular)
+      return .system(size: 20, weight: .regular)
     }
   }
 }

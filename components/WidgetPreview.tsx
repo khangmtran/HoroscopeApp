@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Dimensions, Text, View } from "react-native";
 import { useHoroscope } from "../contexts/HoroscopeContext";
 import { useTheme } from "../contexts/ThemeContext";
@@ -11,8 +11,6 @@ interface WidgetPreviewProps {
 
 const WidgetPreview: React.FC<WidgetPreviewProps> = () => {
   const { theme } = useTheme();
-  const [currentFont, setCurrentFont] = useState(20);
-  const [isAdjustingFont, setIsAdjustingFont] = useState(false);
   const { width: screenWidth } = Dimensions.get("window");
   const { horoscope } = useHoroscope();
   const horoscopeText = horoscope.error || horoscope.data || "Loading...";
@@ -25,78 +23,57 @@ const WidgetPreview: React.FC<WidgetPreviewProps> = () => {
     large: { w: 329, h: 345 },
   };
 
-  useEffect(() => {
-    switch (widgetSize) {
-      case "small":
-        setCurrentFont(40);
-        break;
-      case "medium":
-        setCurrentFont(50);
-        break;
-      case "large":
-        setCurrentFont(60);
-        break;
+  // Hardcoded font size based on widget size and text length
+  const getFontSize = () => {
+    const textLength = horoscopeText.length;
+    
+    if (widgetSize === "small") {
+      if (textLength < 100) return 16;
+      if (textLength < 200) return 14;
+      if (textLength < 300) return 12;
+      return 10;
     }
-  }, [widgetSize, theme.textFont, theme.topic, theme.zodiac]);
+    
+    if (widgetSize === "medium") {
+      if (textLength < 150) return 18;
+      if (textLength < 250) return 16;
+      if (textLength < 350) return 14;
+      return 12;
+    }
+    
+    // large
+    if (textLength < 200) return 20;
+    if (textLength < 300) return 18;
+    if (textLength < 400) return 16;
+    return 14;
+  };
 
   const baseSize = iosSizes[widgetSize];
-  // Scale to device width
-  const scale = screenWidth / 375; // baseline iPhone width
+  const scale = screenWidth / 375;
   const width = baseSize.w * scale;
   const height = baseSize.h * scale;
 
-  const handleTextLayout = (e: any) => {
-    const { lines } = e.nativeEvent;
-
-    // Calculate total text height
-    const textHeight = lines.reduce(
-      (acc: number, line: any) => acc + line.height,
-      0
-    );
-
-    // container height - 20 for padding
-    const containerHeight = iosSizes[widgetSize].h * scale - 20;
-
-    //scale text to fit within container height
-    if (textHeight > containerHeight) {
-      // Only update if not already adjusting to prevent infinite loop
-      if (!isAdjustingFont) {
-        setIsAdjustingFont(true);
-      }
-      setCurrentFont(currentFont - 1); // shrink gradually
-    } else {
-      if (isAdjustingFont) {
-        setIsAdjustingFont(false);
-      }
-    }
-  };
-
   return (
     <View
-      style={[
-        {
-          width,
-          height,
-          borderRadius: 16,
-          backgroundColor: theme.bgColor,
-          justifyContent: "center",
-          alignItems: "center",
-          padding: 10,
-          alignSelf: "center",
-          margin: "auto",
-        },
-      ]}
+      style={{
+        width,
+        height,
+        borderRadius: 16,
+        backgroundColor: theme.bgColor,
+        justifyContent: "center",
+        alignItems: "center",
+        padding: 10,
+        alignSelf: "center",
+        margin: "auto",
+      }}
     >
       <Text
         style={{
-          fontSize: currentFont,
+          fontSize: getFontSize(),
           color: theme.textColor,
           fontFamily: theme.textFont,
           textAlign: "center",
-          textAlignVertical: "center",
-          opacity: isAdjustingFont ? 0 : 1,
         }}
-        onTextLayout={handleTextLayout}
       >
         {horoscopeText}
       </Text>

@@ -1,6 +1,3 @@
-import type { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { faPalette } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { BottomSheetModal, BottomSheetSectionList } from "@gorhom/bottom-sheet";
 import React, { forwardRef, useRef, useState } from "react";
 import { ImageBackground, Pressable, Text, View } from "react-native";
@@ -32,9 +29,17 @@ const CustomizeSheet = forwardRef<BottomSheetModal>((props, ref) => {
   const renderRightContent = (item: string) => {
     switch (item) {
       case "Background Color":
-        return <FontAwesomeIcon icon={faPalette as IconProp} size={20} />;
+        return (
+          <Text className="text-lg font-bold color-blueButton">
+            {theme.textFont}
+          </Text>
+      );
       case "Text Color":
-        return <FontAwesomeIcon icon={faPalette as IconProp} size={20} />;
+      return (
+          <Text className="text-lg font-bold color-blueButton">
+            {theme.textFont}
+          </Text>
+      );      
       case "Font":
         return (
           <Text className="text-lg font-bold color-blueButton">
