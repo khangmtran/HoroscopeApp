@@ -3,6 +3,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import HoroscopeService from "../services/HoroscopeService";
 import { widgetStorage } from "../utils/widgetStorage";
 import { useTheme } from "./ThemeContext";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export type HoroscopeState = {
   data: string;
@@ -76,6 +77,7 @@ export function HoroscopeProvider({ children }: { children: React.ReactNode }) {
         error: null,
       });
       widgetStorage.saveWidgetData(horoscopeData);
+      AsyncStorage.setItem("horoscope", horoscopeData);
     } catch (error) {
       console.error("Failed to fetch horoscope:", error);
       setHoroscope({

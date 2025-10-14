@@ -7,7 +7,9 @@ import React, {
   useEffect,
   useState,
 } from "react";
+import { requestWidgetUpdate } from "react-native-android-widget";
 import { widgetStorage } from "../utils/widgetStorage";
+import { MainWidget } from "../widgets/MainWidget";
 
 export type ThemeState = {
   bgColor: string;
@@ -32,6 +34,25 @@ export function useTheme(): ThemeContextType {
   return context;
 }
 
+const updateAllWidgets = async () => {
+  try {
+    await requestWidgetUpdate({
+      widgetName: "Hello",
+      renderWidget: () => <MainWidget />,
+    });
+    await requestWidgetUpdate({
+      widgetName: "HoroscopeMedium",
+      renderWidget: () => <MainWidget />,
+    });
+    await requestWidgetUpdate({
+      widgetName: "HoroscopeLarge",
+      renderWidget: () => <MainWidget />,
+    });
+  } catch (error) {
+    console.log("Error updating widgets:", error);
+  }
+};
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<ThemeState>({
     bgColor: "white",
@@ -54,8 +75,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         const savedTopic = await AsyncStorage.getItem("topic");
         const savedZodiac = await AsyncStorage.getItem("zodiac");
         setTheme({
-          bgColor: savedBgColor || "black",
-          textColor: savedTextColor || "white",
+          bgColor: savedBgColor || "#000000",
+          textColor: savedTextColor || "#FFFFFF",
           textFont: savedTextFont || "system",
           widgetSize: savedWidgetSize || "medium",
           topic: savedTopic || "General",
@@ -72,19 +93,33 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   // Save theme to AsyncStorage
   useEffect(() => {
-    if (!theme.isLoading) {
-      AsyncStorage.setItem("bg_color", theme.bgColor);
-      AsyncStorage.setItem("text_color", theme.textColor);
-      AsyncStorage.setItem("text_font", theme.textFont);
-      AsyncStorage.setItem("widget_size", theme.widgetSize);
-      AsyncStorage.setItem("topic", theme.topic);
-      AsyncStorage.setItem("zodiac", theme.zodiac);
-      widgetStorage.saveWidgetTheme(
-        theme.bgColor,
-        theme.textColor,
-        theme.textFont
-      );
-    }
+    const saveThemeAndUpdateWidgets = async () => {
+      if (!theme.isLoading) {
+        try {
+          // Save to AsyncStorage
+          await AsyncStorage.setItem("bg_color", theme.bgColor);
+          await AsyncStorage.setItem("text_color", theme.textColor);
+          await AsyncStorage.setItem("text_font", theme.textFont);
+          await AsyncStorage.setItem("widget_size", theme.widgetSize);
+          await AsyncStorage.setItem("topic", theme.topic);
+          await AsyncStorage.setItem("zodiac", theme.zodiac);
+
+          // Save to widget storage
+          await widgetStorage.saveWidgetTheme(
+            theme.bgColor,
+            theme.textColor,
+            theme.textFont
+          );
+
+          // Update all widgets
+          await updateAllWidgets();
+        } catch (error) {
+          console.log("Error saving theme or updating widgets:", error);
+        }
+      }
+    };
+
+    saveThemeAndUpdateWidgets();
   }, [
     theme.bgColor,
     theme.textColor,

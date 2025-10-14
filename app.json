@@ -12,18 +12,16 @@
       "appleTeamId": "P5Z8ADNW3Q",
       "supportsTablet": true,
       "entitlements": {
-        "com.apple.security.application-groups": [
-          "group.com.knt.HoroscopeApp"
-        ]
+        "com.apple.security.application-groups": ["group.com.knt.HoroscopeApp"]
       },
       "bundleIdentifier": "com.anonymous.HoroscopeApp"
     },
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/android-icon-foreground.png",
-        "backgroundImage": "./assets/images/android-icon-background.png",
-        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+        "foregroundImage": "./assets/images/icon.png",
+        "backgroundImage": "./assets/images/bg.png",
+        "monochromeImage": "./assets/images/splash-icon.png"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
@@ -47,11 +45,84 @@
           }
         }
       ],
-      "@bacons/apple-targets"
+      "@bacons/apple-targets",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "ndkVersion": "27.0.12077973"
+          }
+        }
+      ],
+      [
+        "react-native-android-widget",
+        {
+          "fonts": [],
+          "widgets": [
+            {
+              "name": "Hello",
+              "label": "Horoscope (Small)",
+              "minWidth": "110dp",
+              "minHeight": "110dp",
+              "targetCellWidth": 2,
+              "targetCellHeight": 2,
+              "description": "Small horoscope widget",
+              "previewImage": "./assets/widget-preview/hello.png",
+              "updatePeriodMillis": 1800000
+            },
+            {
+              "name": "HoroscopeMedium",
+              "label": "Horoscope (Medium)",
+              "targetCellWidth": 4,
+              "targetCellHeight": 2,
+              "minWidth": "250dp",
+              "minHeight": "110dp",
+              "description": "Medium horoscope widget",
+              "previewImage": "./assets/widget-preview/medium.png",
+              "updatePeriodMillis": 1800000
+            },
+            {
+              "name": "HoroscopeLarge",
+              "label": "Horoscope (Large)",
+              "targetCellWidth": 4,
+              "targetCellHeight": 4,
+              "minWidth": "250dp",
+              "minHeight": "250dp",
+              "description": "Large horoscope widget",
+              "previewImage": "./assets/widget-preview/large.png",
+              "updatePeriodMillis": 1800000
+            }
+          ]
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "build": {
+          "experimental": {
+            "ios": {
+              "appExtensions": [
+                {
+                  "bundleIdentifier": "com.anonymous.HoroscopeApp.widget",
+                  "targetName": "widget",
+                  "entitlements": {
+                    "com.apple.security.application-groups": [
+                      "group.com.knt.HoroscopeApp"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "projectId": "c5b27bd4-bfa0-4b5f-a79e-89ab6f412cdf"
+      }
+    },
+    "owner": "khangt"
   }
 }

@@ -1,10 +1,20 @@
-import React from 'react';
-import type { WidgetTaskHandlerProps } from 'react-native-android-widget';
-import { HelloWidget } from './HelloWidget';
+"use no memo";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import React from "react";
+import type { WidgetTaskHandlerProps } from "react-native-android-widget";
+import { MainWidget } from "./MainWidget";
 
 const nameToWidget = {
-  // Hello will be the **name** with which we will reference our widget.
-  Hello: HelloWidget,
+  Hello: MainWidget,
+  HoroscopeMedium: MainWidget,
+  HoroscopeLarge: MainWidget,
+};
+
+const getWidgetSize = (widgetName: string): "small" | "medium" | "large" => {
+  if (widgetName === "Hello") return "small";
+  if (widgetName === "HoroscopeMedium") return "medium";
+  if (widgetName === "HoroscopeLarge") return "large";
+  return "medium";
 };
 
 export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
@@ -12,25 +22,43 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
   const Widget =
     nameToWidget[widgetInfo.widgetName as keyof typeof nameToWidget];
 
+  const widgetSize = getWidgetSize(widgetInfo.widgetName);
+  const horoscopeText =
+    (await AsyncStorage.getItem("horoscope")) ?? "Loading..";
+  const bgColor = (await AsyncStorage.getItem("bg_color")) ?? "#000000";
+  const textColor = (await AsyncStorage.getItem("text_color")) ?? "#FFFFFF";
+  const textFont = (await AsyncStorage.getItem("text_font")) ?? "Inter";
+
   switch (props.widgetAction) {
-    case 'WIDGET_ADDED':
-      props.renderWidget(<Widget />);
+    case "WIDGET_ADDED":
+    case "WIDGET_UPDATE":
+      props.renderWidget(
+        <Widget
+          horoscopeText={horoscopeText}
+          bgColor={bgColor}
+          textColor={textColor}
+          textFont={textFont}
+          widgetSize={widgetSize}
+        />
+      );
       break;
 
-    case 'WIDGET_UPDATE':
-      // Not needed for now
+    case "WIDGET_RESIZED":
+      props.renderWidget(
+        <Widget
+          horoscopeText={horoscopeText}
+          bgColor={bgColor}
+          textColor={textColor}
+          textFont={textFont}
+          widgetSize={widgetSize}
+        />
+      );
       break;
 
-    case 'WIDGET_RESIZED':
-      // Not needed for now
+    case "WIDGET_DELETED":
       break;
 
-    case 'WIDGET_DELETED':
-      // Not needed for now
-      break;
-
-    case 'WIDGET_CLICK':
-      // Not needed for now
+    case "WIDGET_CLICK":
       break;
 
     default:
