@@ -1,17 +1,18 @@
 "use no memo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React from "react";
+import { Linking } from "react-native";
 import type { WidgetTaskHandlerProps } from "react-native-android-widget";
 import { MainWidget } from "./MainWidget";
 
 const nameToWidget = {
-  Hello: MainWidget,
+  HoroscopeSmall: MainWidget,
   HoroscopeMedium: MainWidget,
   HoroscopeLarge: MainWidget,
 };
 
 const getWidgetSize = (widgetName: string): "small" | "medium" | "large" => {
-  if (widgetName === "Hello") return "small";
+  if (widgetName === "HoroscopeSmall") return "small";
   if (widgetName === "HoroscopeMedium") return "medium";
   if (widgetName === "HoroscopeLarge") return "large";
   return "medium";
@@ -32,17 +33,6 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
   switch (props.widgetAction) {
     case "WIDGET_ADDED":
     case "WIDGET_UPDATE":
-      props.renderWidget(
-        <Widget
-          horoscopeText={horoscopeText}
-          bgColor={bgColor}
-          textColor={textColor}
-          textFont={textFont}
-          widgetSize={widgetSize}
-        />
-      );
-      break;
-
     case "WIDGET_RESIZED":
       props.renderWidget(
         <Widget
@@ -59,6 +49,11 @@ export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
       break;
 
     case "WIDGET_CLICK":
+      if (props.clickAction === "OPEN_APP") {
+        Linking.openURL("horoscopeapp://").catch((err) => {
+          console.error("Failed to open app:", err);
+        });
+      }
       break;
 
     default:

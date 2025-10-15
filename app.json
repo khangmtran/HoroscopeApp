@@ -12,9 +12,15 @@
       "appleTeamId": "P5Z8ADNW3Q",
       "supportsTablet": true,
       "entitlements": {
-        "com.apple.security.application-groups": ["group.com.knt.HoroscopeApp"]
+        "com.apple.security.application-groups": [
+          "group.com.knt.HoroscopeApp",
+          "group.com.knt.HoroscopeApp"
+        ]
       },
-      "bundleIdentifier": "com.anonymous.HoroscopeApp"
+      "bundleIdentifier": "com.anonymous.HoroscopeApp",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -57,38 +63,52 @@
       [
         "react-native-android-widget",
         {
-          "fonts": [],
+          "fonts": [
+            "./assets/fonts/FuzzyBubbles-Regular.ttf",
+            "./assets/fonts/OpenSans-Regular.ttf",
+            "./assets/fonts/FuzzyBubbles-Regular.ttf",
+            "./assets/fonts/Creepster-Regular.ttf",
+            "./assets/fonts/Delius-Regular.ttf",
+            "./assets/fonts/IndieFlower-Regular.ttf",
+            "./assets/fonts/LobsterTwo-Regular.ttf",
+            "./assets/fonts/Monoton-Regular.ttf",
+            "./assets/fonts/Montserrat-Regular.ttf",
+            "./assets/fonts/PlayfairDisplay-Regular.ttf",
+            "./assets/fonts/Sansation-Regular.ttf",
+            "./assets/fonts/SpecialElite-Regular.ttf",
+            "./assets/fonts/VT323-Regular.ttf"
+          ],
           "widgets": [
             {
-              "name": "Hello",
-              "label": "Horoscope (Small)",
+              "name": "HoroscopeSmall",
+              "label": "Small Horoscope Widget",
               "minWidth": "110dp",
               "minHeight": "110dp",
               "targetCellWidth": 2,
               "targetCellHeight": 2,
-              "description": "Small horoscope widget",
-              "previewImage": "./assets/widget-preview/hello.png",
+              "description": "",
+              "previewImage": "./assets/widget-preview/small.png",
               "updatePeriodMillis": 1800000
             },
             {
               "name": "HoroscopeMedium",
-              "label": "Horoscope (Medium)",
+              "label": "Medium Horoscope Widget",
               "targetCellWidth": 4,
               "targetCellHeight": 2,
               "minWidth": "250dp",
               "minHeight": "110dp",
-              "description": "Medium horoscope widget",
+              "description": "",
               "previewImage": "./assets/widget-preview/medium.png",
               "updatePeriodMillis": 1800000
             },
             {
               "name": "HoroscopeLarge",
-              "label": "Horoscope (Large)",
+              "label": "Large horoscope widget",
               "targetCellWidth": 4,
               "targetCellHeight": 4,
               "minWidth": "250dp",
               "minHeight": "250dp",
-              "description": "Large horoscope widget",
+              "description": "",
               "previewImage": "./assets/widget-preview/large.png",
               "updatePeriodMillis": 1800000
             }

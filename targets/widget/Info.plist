@@ -7,5 +7,22 @@
       <key>NSExtensionPointIdentifier</key>
       <string>com.apple.widgetkit-extension</string>
     </dict>
+    <key>UIAppFonts</key>
+    <array>
+      <string>CustomFonts/Roboto-Regular.ttf</string>
+      <string>CustomFonts/OpenSans-Regular.ttf</string>
+      <string>CustomFonts/FuzzyBubbles-Regular.ttf</string>
+      <string>CustomFonts/Creepster-Regular.ttf</string>
+      <string>CustomFonts/DancingScript-Regular.ttf</string>
+      <string>CustomFonts/Delius-Regular.ttf</string>
+      <string>CustomFonts/IndieFlower-Regular.ttf</string>
+      <string>CustomFonts/LobsterTwo-Regular.ttf</string>
+      <string>CustomFonts/Monoton-Regular.ttf</string>
+      <string>CustomFonts/Montserrat-Regular.ttf</string>
+      <string>CustomFonts/PlayfairDisplay-Regular.ttf</string>
+      <string>CustomFonts/Sansation-Regular.ttf</string>
+      <string>CustomFonts/SpecialElite-Regular.ttf</string>
+      <string>CustomFonts/VT323-Regular.ttf</string>
+    </array>
   </dict>
 </plist>

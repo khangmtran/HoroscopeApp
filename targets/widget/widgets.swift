@@ -130,18 +130,36 @@ struct widgetEntryView : View {
     switch fontFamily.lowercased() {
     case "system":
       return .system(size: 20, weight: .regular)
-    case "arial":
-      return .custom("Arial", size: 20)
-    case "helvetica":
-      return .custom("Helvetica", size: 20)
-    case "times new roman", "times":
-      return .custom("Times New Roman", size: 20)
-    case "courier", "courier new":
-      return .custom("Courier New", size: 20)
-    case "georgia":
-      return .custom("Georgia", size: 20)
-    case "verdana":
-      return .custom("Verdana", size: 20)
+  
+    case "roboto":
+      return .custom("Roboto-Regular", size: 20)
+    case "opensans":
+      return .custom("OpenSans-Regular", size: 20)
+    case "fuzzybubbles":
+      return .custom("FuzzyBubbles-Regular", size: 20)
+    case "creepster":
+      return .custom("Creepster-Regular", size: 20)
+    case "dancingscript":
+      return .custom("DancingScript-Regular", size: 20)
+    case "delius":
+      return .custom("Delius-Regular", size: 20)
+    case "indieflower":
+      return .custom("IndieFlower-Regular", size: 20)
+    case "lobstertwo":
+      return .custom("LobsterTwo-Regular", size: 20)
+    case "monoton":
+      return .custom("Monoton-Regular", size: 20)
+    case "montserrat":
+      return .custom("Montserrat-Regular", size: 20)
+    case "playfair", "playfairdisplay":
+      return .custom("PlayfairDisplay-Regular", size: 20)
+    case "sansation":
+      return .custom("Sansation-Regular", size: 20)
+    case "specialelite":
+      return .custom("SpecialElite-Regular", size: 20)
+    case "vt323":
+      return .custom("VT323-Regular", size: 20)
+    
     default:
       return .system(size: 20, weight: .regular)
     }

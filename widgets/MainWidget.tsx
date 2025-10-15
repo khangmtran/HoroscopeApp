@@ -53,6 +53,7 @@ export function MainWidget({
         borderRadius: 16,
         padding: 10,
       }}
+      clickAction="OPEN_APP"
     >
       <TextWidget
         text={horoscopeText}
