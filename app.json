@@ -34,11 +34,11 @@
       "package": "com.anonymous.HoroscopeApp"
     },
     "web": {
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "output": "static"
     },
     "plugins": [
       "expo-router",
+      "expo-background-task",
       [
         "expo-splash-screen",
         {
@@ -64,7 +64,7 @@
         "react-native-android-widget",
         {
           "fonts": [
-            "./assets/fonts/FuzzyBubbles-Regular.ttf",
+            "./assets/fonts/Roboto-Regular.ttf",
             "./assets/fonts/OpenSans-Regular.ttf",
             "./assets/fonts/FuzzyBubbles-Regular.ttf",
             "./assets/fonts/Creepster-Regular.ttf",
@@ -114,7 +114,8 @@
             }
           ]
         }
-      ]
+      ],
+      "expo-background-task"
     ],
     "experiments": {
       "typedRoutes": true,

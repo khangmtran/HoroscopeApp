@@ -1,11 +1,8 @@
-import { ZodiacData } from "@/components/ZodiacSheet";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { requestWidgetUpdate } from "react-native-android-widget";
 import HoroscopeService from "../services/HoroscopeService";
 import { widgetStorage } from "../utils/widgetStorage";
-import { MainWidget } from "../widgets/MainWidget";
-import { useTheme } from "./ThemeContext";
+import { updateAllWidgets, useTheme } from "./ThemeContext";
 
 export type HoroscopeState = {
   data: string;
@@ -28,7 +25,7 @@ export function useHoroscope(): HoroscopeContextType {
   return context;
 }
 
-const zodiacDates: Record<string, string> = {
+export const zodiacDates: Record<string, string> = {
   Aquarius: "01-20",
   Pisces: "02-19",
   Aries: "03-21",
@@ -43,75 +40,18 @@ const zodiacDates: Record<string, string> = {
   Capricorn: "12-22",
 };
 
-const updateAllWidgets = async () => {
-  try {
-    const horoscopeText =
-      (await AsyncStorage.getItem("horoscope")) ?? "Loading..";
-    const bgColor = (await AsyncStorage.getItem("bg_color")) ?? "#000000";
-    const textColor = (await AsyncStorage.getItem("text_color")) ?? "#FFFFFF";
-    const textFont = (await AsyncStorage.getItem("text_font")) ?? "Inter";
-
-    await requestWidgetUpdate({
-      widgetName: "Hello",
-      renderWidget: () => (
-        <MainWidget
-          horoscopeText={horoscopeText}
-          bgColor={bgColor}
-          textColor={textColor}
-          textFont={textFont}
-          widgetSize="small"
-        />
-      ),
-    });
-    await requestWidgetUpdate({
-      widgetName: "HoroscopeMedium",
-      renderWidget: () => (
-        <MainWidget
-          horoscopeText={horoscopeText}
-          bgColor={bgColor}
-          textColor={textColor}
-          textFont={textFont}
-          widgetSize="medium"
-        />
-      ),
-    });
-    await requestWidgetUpdate({
-      widgetName: "HoroscopeLarge",
-      renderWidget: () => (
-        <MainWidget
-          horoscopeText={horoscopeText}
-          bgColor={bgColor}
-          textColor={textColor}
-          textFont={textFont}
-          widgetSize="large"
-        />
-      ),
-    });
-  } catch (error) {
-    console.log("Error updating widgets:", error);
-  }
-};
-
 export function HoroscopeProvider({ children }: { children: React.ReactNode }) {
   const { theme } = useTheme();
-  const selectedZodiac = ZodiacData.find((z) => z.name === theme.zodiac);
   const [horoscope, setHoroscope] = useState<HoroscopeState>({
     data: "",
     isLoading: true,
     error: null,
   });
 
-  const getZodiacDate = (zodiacName?: string): string | null => {
-    if (!zodiacName) return null;
-
-    const retDate = zodiacDates[zodiacName];
-    return retDate ? `2025-${retDate}` : null;
-  };
-
   const fetchHoroscope = async () => {
     try {
       setHoroscope((prev) => ({ ...prev, isLoading: true, error: null }));
-      const zodiacDate = getZodiacDate(selectedZodiac?.name) || "2025-01-20";
+      const zodiacDate = getZodiacDate(theme.zodiac) || "2025-01-20";
       if (__DEV__) {
         console.log("new zodiac date:", zodiacDate);
       }
@@ -163,3 +103,9 @@ export function HoroscopeProvider({ children }: { children: React.ReactNode }) {
     </HoroscopeContext.Provider>
   );
 }
+
+export const getZodiacDate = (zodiacName?: string): string | null => {
+  if (!zodiacName) return null;
+  const retDate = zodiacDates[zodiacName];
+  return retDate ? `2025-${retDate}` : null;
+};

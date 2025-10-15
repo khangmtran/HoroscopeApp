@@ -19,7 +19,6 @@ export const fontNames = [
   "OpenSans",
   "FuzzyBubbles",
   "Creepster",
-  "DancingScript",
   "Delius",
   "IndieFlower",
   "LobsterTwo",

@@ -113,7 +113,18 @@ struct SimpleEntry: TimelineEntry {
 
 struct widgetEntryView : View {
   var entry: Provider.Entry
-  
+  init(entry: Provider.Entry) {
+    self.entry = entry
+    
+    //test
+    // Print all available fonts
+    for family in UIFont.familyNames.sorted() {
+      print("Font Family: \(family)")
+      for name in UIFont.fontNames(forFamilyName: family) {
+        print("  - \(name)")
+      }
+    }
+  }
   var body: some View {
       VStack {
         Text(entry.widgetData.horoscope)
@@ -130,7 +141,6 @@ struct widgetEntryView : View {
     switch fontFamily.lowercased() {
     case "system":
       return .system(size: 20, weight: .regular)
-  
     case "roboto":
       return .custom("Roboto-Regular", size: 20)
     case "opensans":
@@ -139,8 +149,6 @@ struct widgetEntryView : View {
       return .custom("FuzzyBubbles-Regular", size: 20)
     case "creepster":
       return .custom("Creepster-Regular", size: 20)
-    case "dancingscript":
-      return .custom("DancingScript-Regular", size: 20)
     case "delius":
       return .custom("Delius-Regular", size: 20)
     case "indieflower":
@@ -159,10 +167,16 @@ struct widgetEntryView : View {
       return .custom("SpecialElite-Regular", size: 20)
     case "vt323":
       return .custom("VT323-Regular", size: 20)
-    
     default:
       return .system(size: 20, weight: .regular)
     }
+    //test
+    if UIFont(name: fontName, size: 20) != nil {
+    return .custom(fontName, size: 20)
+  } else {
+    print("⚠️ Font '\(fontName)' not found! Falling back to system font.")
+    return .system(size: 20, weight: .regular)
+  }
   }
 }
 

@@ -34,55 +34,6 @@ export function useTheme(): ThemeContextType {
   return context;
 }
 
-const updateAllWidgets = async () => {
-  try {
-    const horoscopeText =
-      (await AsyncStorage.getItem("horoscope")) ?? "Loading..";
-    const bgColor = (await AsyncStorage.getItem("bg_color")) ?? "#000000";
-    const textColor = (await AsyncStorage.getItem("text_color")) ?? "#FFFFFF";
-    const textFont = (await AsyncStorage.getItem("text_font")) ?? "Inter";
-
-    await requestWidgetUpdate({
-      widgetName: "HoroscopeSmall",
-      renderWidget: () => (
-        <MainWidget
-          horoscopeText={horoscopeText}
-          bgColor={bgColor}
-          textColor={textColor}
-          textFont={textFont}
-          widgetSize="small"
-        />
-      ),
-    });
-    await requestWidgetUpdate({
-      widgetName: "HoroscopeMedium",
-      renderWidget: () => (
-        <MainWidget
-          horoscopeText={horoscopeText}
-          bgColor={bgColor}
-          textColor={textColor}
-          textFont={textFont}
-          widgetSize="medium"
-        />
-      ),
-    });
-    await requestWidgetUpdate({
-      widgetName: "HoroscopeLarge",
-      renderWidget: () => (
-        <MainWidget
-          horoscopeText={horoscopeText}
-          bgColor={bgColor}
-          textColor={textColor}
-          textFont={textFont}
-          widgetSize="large"
-        />
-      ),
-    });
-  } catch (error) {
-    console.log("Error updating widgets:", error);
-  }
-};
-
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<ThemeState>({
     bgColor: "white",
@@ -166,3 +117,52 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     </ThemeContext.Provider>
   );
 }
+
+export const updateAllWidgets = async () => {
+  try {
+    const horoscopeText =
+      (await AsyncStorage.getItem("horoscope")) ?? "Loading..";
+    const bgColor = (await AsyncStorage.getItem("bg_color")) ?? "#000000";
+    const textColor = (await AsyncStorage.getItem("text_color")) ?? "#FFFFFF";
+    const textFont = (await AsyncStorage.getItem("text_font")) ?? "Inter";
+    console.log(textFont);
+    await requestWidgetUpdate({
+      widgetName: "HoroscopeSmall",
+      renderWidget: () => (
+        <MainWidget
+          horoscopeText={horoscopeText}
+          bgColor={bgColor}
+          textColor={textColor}
+          textFont={textFont}
+          widgetSize="small"
+        />
+      ),
+    });
+    await requestWidgetUpdate({
+      widgetName: "HoroscopeMedium",
+      renderWidget: () => (
+        <MainWidget
+          horoscopeText={horoscopeText}
+          bgColor={bgColor}
+          textColor={textColor}
+          textFont={textFont}
+          widgetSize="medium"
+        />
+      ),
+    });
+    await requestWidgetUpdate({
+      widgetName: "HoroscopeLarge",
+      renderWidget: () => (
+        <MainWidget
+          horoscopeText={horoscopeText}
+          bgColor={bgColor}
+          textColor={textColor}
+          textFont={textFont}
+          widgetSize="large"
+        />
+      ),
+    });
+  } catch (error) {
+    console.log("Error updating widgets:", error);
+  }
+};
