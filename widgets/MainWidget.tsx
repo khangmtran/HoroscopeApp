@@ -59,7 +59,7 @@ export function MainWidget({
         text={horoscopeText}
         style={{
           fontSize: getFontSize(),
-          fontFamily: textFont,
+          fontFamily: mapFontName(textFont),
           color: textColor as any,
           textAlign: "center",
         }}
@@ -67,3 +67,23 @@ export function MainWidget({
     </FlexWidget>
   );
 }
+
+const mapFontName = (fontName: string): string => {
+  const fontMap: Record<string, string> = {
+    Roboto: "Roboto-Regular",
+    OpenSans: "OpenSans-Regular",
+    FuzzyBubbles: "FuzzyBubbles-Regular",
+    Creepster: "Creepster-Regular",
+    Delius: "Delius-Regular",
+    IndieFlower: "IndieFlower-Regular",
+    LobsterTwo: "LobsterTwo-Regular",
+    Monoton: "Monoton-Regular",
+    Montserrat: "Montserrat-Regular",
+    Playfair: "PlayfairDisplay-Regular",
+    Sansation: "Sansation-Regular",
+    SpecialElite: "SpecialElite-Regular",
+    VT323: "VT323-Regular",
+    Inter: "sans-serif",
+  };
+  return fontMap[fontName] || "sans-serif";
+};

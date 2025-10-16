@@ -5,13 +5,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { FontProvider, useFont } from "../contexts/FontContext";
 import { HoroscopeProvider } from "../contexts/HoroscopeContext";
 import { ThemeProvider, useTheme } from "../contexts/ThemeContext";
-//import { registerHoroscopeBackgroundTask } from "../tasks/horoscopeBackgroundTask";
+import { registerHoroscopeBackgroundTask } from "../tasks/horoscopeBackgroundTask";
 import "./globals.css";
 
 export default function RootLayout() {
-  // useEffect(() => {
-  //   registerHoroscopeBackgroundTask();
-  // }, []);
+  useEffect(() => {
+    registerHoroscopeBackgroundTask();
+  }, []);
   return (
     <FontProvider>
       <ThemeProvider>

@@ -3,14 +3,13 @@ import BottomSheet, {
   BottomSheetModalProvider,
 } from "@gorhom/bottom-sheet";
 import { Image } from "expo-image";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Pressable, Text, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import CustomizeSheet from "../components/CustomizeSheet";
 import WidgetPreview from "../components/WidgetPreview";
 import ZodiacSheet, { ZodiacData } from "../components/ZodiacSheet";
 import { useTheme } from "../contexts/ThemeContext";
-import { MainWidgetPreviewScreen } from "../widgets/MainWidgetPreviewScreen";
 
 export default function Index() {
   const { theme } = useTheme();
@@ -18,7 +17,6 @@ export default function Index() {
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const zodiacSheetRef = useRef<BottomSheet>(null);
   const selectedZodiac = ZodiacData.find((z) => z.name === theme.zodiac);
-  const [showWidgetPreview, setShowWidgetPreview] = useState(false);
   return (
     <GestureHandlerRootView>
       {/* wraps screen to enable modals */}
@@ -45,26 +43,8 @@ export default function Index() {
           </View>
           {/* main content */}
           <View className="flex-1 ">
-            {/* test widget */}
-            <View className="px-5 pb-3">
-              <Pressable
-                onPress={() => setShowWidgetPreview(!showWidgetPreview)}
-                className="border rounded-2xl p-3 bg-blue-50"
-              >
-                <Text className="text-center font-semibold">
-                  {showWidgetPreview
-                    ? "Show App Preview"
-                    : "Show Widget Preview"}
-                </Text>
-              </Pressable>
-            </View>
-            {/* ------------- */}
             {/* widget */}
-            {showWidgetPreview ? (
-              <MainWidgetPreviewScreen />
-            ) : (
-              <WidgetPreview />
-            )}
+            <WidgetPreview />
             {/* buttons */}
             <View className="flex-row justify-between items-center">
               {/* customize button */}

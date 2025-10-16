@@ -20,7 +20,9 @@ TaskManager.defineTask(HOROSCOPE_BACKGROUND_TASK, async () => {
       zodiacDate,
       topic
     );
-
+    if(__DEV__){
+      console.log(newHoroscope)
+    }
     // Save to AsyncStorage
     await AsyncStorage.setItem("horoscope", newHoroscope);
 
@@ -42,7 +44,8 @@ TaskManager.defineTask(HOROSCOPE_BACKGROUND_TASK, async () => {
 export async function registerHoroscopeBackgroundTask() {
   try {
     await BackgroundTask.registerTaskAsync(HOROSCOPE_BACKGROUND_TASK, {
-      minimumInterval: 60 * 60 * 12, // 12 hours
+      // minimumInterval: 60 * 60 * 12, // 12 hours
+      minimumInterval: 60 * 15,
     });
     if (__DEV__) {
       console.log("✅ Background task registered");
