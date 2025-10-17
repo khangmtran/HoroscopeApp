@@ -10,12 +10,14 @@ import CustomizeSheet from "../components/CustomizeSheet";
 import WidgetPreview from "../components/WidgetPreview";
 import ZodiacSheet, { ZodiacData } from "../components/ZodiacSheet";
 import { useTheme } from "../contexts/ThemeContext";
+import TutorialSheet from "../components/TutorialSheet";
 
 export default function Index() {
   const { theme } = useTheme();
   // control bottom sheet
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const zodiacSheetRef = useRef<BottomSheet>(null);
+  const tutorialSheetRef = useRef<BottomSheet>(null);
   const selectedZodiac = ZodiacData.find((z) => z.name === theme.zodiac);
   return (
     <GestureHandlerRootView>
@@ -23,7 +25,21 @@ export default function Index() {
       <BottomSheetModalProvider>
         <View className="flex-1">
           {/* header */}
-          <View className="items-center justify-center p-10">
+          <View className="flex-row justify-end mt-5 mx-2">
+            <Pressable
+              className="items-center"
+              onPress={() => {
+                tutorialSheetRef.current?.expand();
+              }}
+            >
+              <Image
+                source={require("../assets/icons/information.png")}
+                style={{ width: 20, height: 20, tintColor: "#4287f5" }}
+              />
+              <Text className="color-gray-500">Widget Tutorial</Text>
+            </Pressable>
+          </View>
+          <View className="items-center justify-center">
             <Text className="text-3xl font-bold">Daily Horoscope</Text>
             <View className="flex-row gap-2 items-center">
               <Text className="text-2xl my-1 italic">{theme.zodiac}</Text>
@@ -80,6 +96,7 @@ export default function Index() {
             {/* bottom sheet */}
             <CustomizeSheet ref={bottomSheetRef} />
             <ZodiacSheet ref={zodiacSheetRef} />
+            <TutorialSheet ref={tutorialSheetRef} />
           </View>
           {/* end of main content */}
         </View>
