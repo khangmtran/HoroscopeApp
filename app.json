@@ -123,6 +123,7 @@
     },
     "extra": {
       "router": {},
+      "EXPO_PUBLIC_RAPIDAPI_KEY": "@RAPIDAPI_KEY",
       "eas": {
         "build": {
           "experimental": {
