@@ -69,9 +69,10 @@ const ZodiacSheet = forwardRef<BottomSheet>((props, ref) => {
               </View>
               <View style={{ width: "10%" }}>
                 {theme.zodiac === item.name && (
-                  <Text className="text-green-600 text-xl font-bold text-center">
-                    ✔
-                  </Text>
+                  <Image
+                    source={require("../assets/icons/check.png")}
+                    style={{ width: 18, height: 18 }}
+                  />
                 )}
               </View>
             </Pressable>

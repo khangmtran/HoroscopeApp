@@ -25,7 +25,7 @@ export default function Index() {
       <BottomSheetModalProvider>
         <View className="flex-1">
           {/* header */}
-          <View className="flex-row justify-end mt-5 mx-2">
+          <View className="flex-row justify-end mt-10 mx-2">
             <Pressable
               className="items-center"
               onPress={() => {
@@ -64,7 +64,7 @@ export default function Index() {
             {/* buttons */}
             <View className="flex-row justify-between items-center">
               {/* customize button */}
-              <View className="p-5">
+              <View className="p-5 mb-5">
                 <Pressable onPress={() => bottomSheetRef.current?.present()}>
                   <View className="border rounded-2xl self-start p-3.5 bg-white">
                     <View className="flex-row gap-2 items-center">
@@ -78,7 +78,7 @@ export default function Index() {
                 </Pressable>
               </View>
               {/* setting button */}
-              <View className="p-5">
+              <View className="p-5 mb-5">
                 <Pressable onPress={() => zodiacSheetRef.current?.expand()}>
                   <View className="border rounded-2xl self-start p-3.5 bg-white">
                     <View className="flex-row gap-2 items-center">

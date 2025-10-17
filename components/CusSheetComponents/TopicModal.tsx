@@ -1,6 +1,6 @@
 import { BottomSheetFlatList, BottomSheetModal } from "@gorhom/bottom-sheet";
 import React, { forwardRef } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { useTheme } from "../../contexts/ThemeContext";
 
 type Topic = {
@@ -25,7 +25,10 @@ const TopicModal = forwardRef<BottomSheetModal>((props, ref) => {
         <View className="flex-row justify-between items-center border rounded-2xl p-5 mb-5">
           <Text className="text-lg font-bold">{item.name}</Text>
           {theme.topic === item.name && (
-            <Text className="color-green-600 text-xl font-bold">✔</Text>
+            <Image
+              source={require("../../assets/icons/check.png")}
+              style={{ width: 18, height: 18 }}
+            />
           )}
         </View>
       </Pressable>

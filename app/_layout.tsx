@@ -1,7 +1,8 @@
 import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
 import { ActivityIndicator, Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { FontProvider, useFont } from "../contexts/FontContext";
 import { HoroscopeProvider } from "../contexts/HoroscopeContext";
 import { ThemeProvider, useTheme } from "../contexts/ThemeContext";
@@ -46,8 +47,9 @@ function Content() {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaProvider style={{ flex: 1 }}>
+      <StatusBar style="auto" />
       <Stack screenOptions={{ headerShown: false }} />
-    </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
