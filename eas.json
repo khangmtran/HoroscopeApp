@@ -1,4 +1,3 @@
-
 {
   "cli": {
     "version": ">= 16.20.4",
@@ -7,22 +6,13 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal",
-      "env": {
-        "EXPO_PUBLIC_RAPIDAPI_KEY": "@RAPIDAPI_KEY"
-      }
+      "distribution": "internal"
     },
     "preview": {
-      "distribution": "internal",
-      "env": {
-        "EXPO_PUBLIC_RAPIDAPI_KEY": "@RAPIDAPI_KEY"
-      }
+      "distribution": "internal"
     },
     "production": {
-      "autoIncrement": true,
-      "env": {
-        "EXPO_PUBLIC_RAPIDAPI_KEY": "@RAPIDAPI_KEY"
-      }
+      "autoIncrement": true
     }
   },
   "submit": {
