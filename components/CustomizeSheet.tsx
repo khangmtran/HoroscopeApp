@@ -1,4 +1,5 @@
 import { BottomSheetModal, BottomSheetSectionList } from "@gorhom/bottom-sheet";
+import { Image } from "expo-image";
 import React, { forwardRef, useRef, useState } from "react";
 import { ImageBackground, Pressable, Text, View } from "react-native";
 import { useTheme } from "../contexts/ThemeContext";
@@ -30,16 +31,18 @@ const CustomizeSheet = forwardRef<BottomSheetModal>((props, ref) => {
     switch (item) {
       case "Background Color":
         return (
-          <Text className="text-lg font-bold color-blueButton">
-            {theme.textFont}
-          </Text>
-      );
+          <Image
+            source={require("../assets/icons/palette.png")}
+            style={{ width: 20, height: 20 }}
+          />
+        );
       case "Text Color":
-      return (
-          <Text className="text-lg font-bold color-blueButton">
-            {theme.textFont}
-          </Text>
-      );      
+        return (
+          <Image
+            source={require("../assets/icons/palette.png")}
+            style={{ width: 20, height: 20 }}
+          />
+        );
       case "Font":
         return (
           <Text className="text-lg font-bold color-blueButton">
@@ -108,7 +111,7 @@ const CustomizeSheet = forwardRef<BottomSheetModal>((props, ref) => {
     <>
       <BottomSheetModal
         ref={ref}
-        snapPoints={["30%","55%"]}
+        snapPoints={["30%", "55%"]}
         index={1}
         backgroundStyle={{ borderRadius: 25, backgroundColor: "#000021" }}
         handleIndicatorStyle={{ backgroundColor: "white" }}
